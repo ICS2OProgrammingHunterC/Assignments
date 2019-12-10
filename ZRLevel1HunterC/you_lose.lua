@@ -27,6 +27,14 @@ local function MainMenuTransition ()
     composer.gotoScene("main_menu", {effect = "slideRight", time = 500 })
 end
 
+local function RestartTransition ()
+    composer.gotoScene("level2_screen", {effect = "fade", time = 500 })
+end
+-----------------------------------------------------------------------------------------
+-- SOUNDS
+-----------------------------------------------------------------------------------------
+local youLoseSound = audio.loadSound("Sounds/lose.mp3")
+local youLoseSoundChannel
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -73,6 +81,25 @@ function scene:create( event )
     mainMenuButton.height = 100
 
     sceneGroup:insert(mainMenuButton)
+
+    restartButton = widget.newButton(
+        {
+            --set its position on the screen relative to the screen size
+            x = display.contentWidth*4.5/5,
+            y = display.contentHeight*7.5/8,
+
+            -- Insert the images here
+            defaultFile = "Images/RestartButtonUnpressedHunter@2x.png",
+            overFile = "Images/RestartButtonPressedHunter@2x.png",
+
+            -- When the button is released, call the Credits transition function
+            onRelease = RestartTransition
+        } )  
+    -- change the size of the button
+    restartButton.width = 200
+    restartButton.height = 100
+
+    sceneGroup:insert(restartButton)
 end -- function scene:create( event )
 
 
@@ -94,6 +121,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        youLoseSoundChannel = audio.play(youLoseSound)
         
                 
     end

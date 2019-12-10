@@ -27,6 +27,11 @@ local function MainMenuTransition ()
     composer.gotoScene("main_menu", {effect = "slideRight", time = 500 })
 end
 -----------------------------------------------------------------------------------------
+--SOUNDS
+-----------------------------------------------------------------------------------------
+local youWinSound = audio.loadSound("Sounds/youWin.mp3")
+local youWinSoundChannel
+-----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
 
@@ -94,7 +99,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
-        
+        youWinSoundChannel = audio.play(youWinSound)
                 
     end
 end --function scene:show( event )

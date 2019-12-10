@@ -50,6 +50,9 @@ local function BackToLevel2()
     ResumeLevel2()
 end 
 
+local function Level2Transition( )
+    composer.gotoScene("level2_screen")
+end
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -68,7 +71,7 @@ function scene:create( event )
 
     -----------------------------------------------------------------------------------------
     --making a cover rectangle to have the background fully bolcked where the question is
-    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.5, display.contentHeight*0.7, 50 )
+    cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.5, display.contentHeight*0.9, 50 )
     --setting its colour
     cover:setFillColor(0/255, 0/255, 255/255)
     -----------------------------------------------------------------------------------------
@@ -84,7 +87,7 @@ function scene:create( event )
         {
             --set its position on the screen relative to the screen size
             x = display.contentWidth/2,
-            y = display.contentHeight*4/8,
+            y = display.contentHeight*3/8,
 
             -- set the size 
 
@@ -104,7 +107,7 @@ function scene:create( event )
         {
             --set its position on the screen relative to the screen size
             x = display.contentWidth/2,
-            y = display.contentHeight*5.5/8,
+            y = display.contentHeight*4.5/8,
 
             -- set the size 
 
@@ -123,7 +126,7 @@ function scene:create( event )
         {
             --set its position on the screen relative to the screen size
             x = display.contentWidth/2,
-            y = display.contentHeight*2.5/8,
+            y = display.contentHeight*1.5/8,
 
             -- Insert the images here
             defaultFile = "Images/ResumeButtonHunter@2x.png",
@@ -136,10 +139,28 @@ function scene:create( event )
         resumeButton.width = 270
         resumeButton.height = 140
 
+        restartButton = widget.newButton(
+        {
+            --set its position on the screen relative to the screen size
+            x = display.contentWidth/2,
+            y = display.contentHeight*6.5/8,
+
+            -- Insert the images here
+            defaultFile = "Images/RestartButtonNate@2x.png",
+            overFile = "Images/RestartButtonPressedNate@2x.png",
+
+            -- When the button is released, call the Credits transition function
+            onRelease = Level2Transition
+        } )  
+
+        restartButton.width = 270
+        restartButton.height = 160
+
 
     sceneGroup:insert( mainMenuButton )
     sceneGroup:insert( instructionsButton )
     sceneGroup:insert( resumeButton )
+    sceneGroup:insert( restartButton )
 
 end --function scene:create( event )
 

@@ -715,12 +715,10 @@ function scene:show( event )
 
 
 
-        -- make all soccer balls visible
+        -- make all Keys visible
         MakeKeysVisible()
 
-
-
-        -- make all lives visible
+        -- make all hearts visible
         MakeHeartsVisible()
 
         -- add physics bodies to each object
