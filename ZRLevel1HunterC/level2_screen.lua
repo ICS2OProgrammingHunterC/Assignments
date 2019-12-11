@@ -94,7 +94,7 @@ local coinSound = audio.loadSound("Sounds/coin.wav")
 local coinSoundChannel
 
 local bkgMusic = audio.loadStream("Sounds/action.mp3")
-local bkgMusicChannel = audio.play( bkgMusic, {channel = 1, loops = -1} )
+local bkgMusicChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -132,11 +132,12 @@ local function stop (event)
 end
 
 local function WinScreenTransition( )
-    composer.gotoScene("you_Win")
+    composer.gotoScene("you_win")
 end
 
 local function PauseTransition( )
     composer.showOverlay("pause")
+    character.isVisible = false
 end
 
 local function YouLoseTransition()
@@ -712,7 +713,7 @@ function scene:show( event )
 
         numLives = 2
         questionsAnswered = 0
-
+        bkgMusicChannel = audio.play( bkgMusic, {channel = 1, loops = -1} )
 
 
         -- make all Keys visible

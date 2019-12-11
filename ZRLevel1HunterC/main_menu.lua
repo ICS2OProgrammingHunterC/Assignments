@@ -34,7 +34,7 @@ local unmuteButton
 
 -- the background music
 local bkgMusic = audio.loadSound("Sounds/bkgMusic.mp3")
-local bkgMusicChannel = audio.play( bkgMusic, {channel = 1, loops = -1} )
+local 
 
 -----------------------------------------------------------------------------------------
 --GLOBAL VARIABLES
@@ -54,7 +54,7 @@ end
 -- Creating Transition to Level1 Screen
 local function LevelSelectTransition( )
     composer.gotoScene( "level_select", {effect = "zoomOutInFade", time = 500})
-    audio.stop(bkgMusicChannel)
+    audio.pause(bkgMusicChannel)
 end    
 
 -- INSERT LOCAL FUNCTION DEFINITION THAT GOES TO INSTRUCTIONS SCREEN 
@@ -222,6 +222,7 @@ function scene:show( event )
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
+        bkgMusicChannel = audio.play( bkgMusic, {channel = 1, loops = -1} )
         
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
@@ -248,7 +249,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         muteButton:removeEventListener("touch", Mute)
         unmuteButton:removeEventListener("touch", Unmute)
-        
+        audio.stop(bkgMusicChannel)
     end
 
 end --function scene:hide( event )

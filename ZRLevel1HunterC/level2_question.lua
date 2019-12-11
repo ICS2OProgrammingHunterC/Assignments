@@ -92,9 +92,11 @@ local function TouchListenerAnswer(touch)
 
     if (touch.phase == "ended") then
         
-        correctObject.isVisible = true
+        BackToLevel2()
         -- play the correct sound 
         correctSoundChannel = audio.play(correctSound)
+
+        correctObject.isVisible = true
         timer.performWithDelay(1500, HideCorrect)    
     end 
 end
@@ -237,7 +239,7 @@ local function DisplayQuestion()
         wrongText1.text = "a Planet"
         wrongText2.text = "a Comet"
         wrongText3.text = "an Asteroid"
-    elseif(questionSeelction == 7)then
+    elseif(questionSelection == 7)then
 
         --create the question
         questionText.text = "Which of these is not a Planet?"
