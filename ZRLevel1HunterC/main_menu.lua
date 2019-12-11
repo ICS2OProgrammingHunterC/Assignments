@@ -225,6 +225,7 @@ function scene:show( event )
         
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
+
     end
 
 end --function scene:show( event )
@@ -249,6 +250,7 @@ function scene:hide( event )
         muteButton:removeEventListener("touch", Mute)
         unmuteButton:removeEventListener("touch", Unmute)
         
+        audio.stop(bkgMusic)
     end
 
 end --function scene:hide( event )
