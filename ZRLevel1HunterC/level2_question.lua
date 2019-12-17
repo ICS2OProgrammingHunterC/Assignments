@@ -91,12 +91,12 @@ end
 local function TouchListenerAnswer(touch)
 
     if (touch.phase == "ended") then
+        correctObject.isVisible = true
         
-        BackToLevel2()
         -- play the correct sound 
         correctSoundChannel = audio.play(correctSound)
 
-        correctObject.isVisible = true
+        
         timer.performWithDelay(1500, HideCorrect)    
     end 
 end
@@ -107,7 +107,6 @@ local function TouchListenerWrongAnswer(touch)
     
     if (touch.phase == "ended") then
         
-        BackToLevel2( )
 
         incorrectSoundChannel = audio.play(incorrectSound)
 
@@ -120,8 +119,6 @@ end
 local function TouchListenerWrongAnswer2(touch)
     
     if (touch.phase == "ended") then
-
-        BackToLevel2( )
 
         incorrectSoundChannel = audio.play(incorrectSound)
 
@@ -136,8 +133,6 @@ end
 local function TouchListenerWrongAnswer3(touch)
     
     if (touch.phase == "ended") then
-
-        BackToLevel2( )
 
         incorrectSoundChannel = audio.play(incorrectSound)
 
@@ -356,12 +351,10 @@ function scene:create( event )
     wrongText3.anchorX = 0
 
     correctObject = display.newText("Correct!", display.contentWidth/2, display.contentHeight*1/3, Arial, 50)
-    correctObject.anchorX = 0
     correctObject.isVisible = false
     correctObject:setFillColor(0,1,0)
 
     incorrectObject = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/3, Arial, 50)
-    incorrectObject.anchorX = 0
     incorrectObject.isVisible = false
     incorrectObject:setFillColor(1,0,0)
     -----------------------------------------------------------------------------------------

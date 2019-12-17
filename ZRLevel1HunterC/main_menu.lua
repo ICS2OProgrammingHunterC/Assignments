@@ -78,6 +78,27 @@ local function Mute(touch)
     end
 end
 
+local function Sound ( )
+    if (soundOn == true) then 
+        --hide the mute button
+        muteButton.isVisible = true
+        --make the unmute button isVisible
+        unmuteButton.isVisible = false
+
+        --continue the music
+        audio.resume(bkgMusicChannel)
+    elseif (soundOn == false) then
+
+        --hide the mute button
+        muteButton.isVisible = false
+        --make the unmute button isVisible
+        unmuteButton.isVisible = true
+        -- keep the music off
+        audio.stop(bkgMusicChannel)
+    end
+end
+
+
 --function for when the user wants to unmute sound
 local function Unmute(touch)
     if(touch.phase == "ended") then
@@ -226,6 +247,8 @@ function scene:show( event )
         
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
+
+        Sound( )
     end
 
 end --function scene:show( event )

@@ -772,6 +772,8 @@ function scene:hide( event )
 
         muteButton:removeEventListener("touch", Mute)
         unmuteButton:removeEventListener("touch", Unmute)
+        Runtime:removeEventListener("enterFrame", MovePortal)
+        Runtime:removeEventListener("enterFrame", MoveZombies)
 
         audio.stop(bkgMusicChannel)
     end
