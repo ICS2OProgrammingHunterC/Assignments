@@ -468,25 +468,25 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
-    platform1 = display.newImageRect("Images/Level1PlatformHunter.png", 200, 50)
+    platform1 = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
     platform1.x = display.contentWidth * 0.7 / 8
     platform1.y = display.contentHeight * 1.6 / 4
         
     sceneGroup:insert( platform1 )
 
-    platform2 = display.newImageRect("Images/Level1PlatformHunter.png", 175, 50)
+    platform2 = display.newImageRect("Images/Level2PlatformHunter.png", 175, 50)
     platform2.x = display.contentWidth* 1.2 /2
     platform2.y = display.contentHeight * 1.4/ 4
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/Level1PlatformHunter.png", 180, 50)
+    platform3 = display.newImageRect("Images/Level2PlatformHunter.png", 180, 50)
     platform3.x = display.contentWidth *3.8 / 5
     platform3.y = display.contentHeight * 3.8 / 5
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/Level1PlatformHunter.png", 180, 50)
+    platform4 = display.newImageRect("Images/Level2PlatformHunter.png", 180, 50)
     platform4.x = display.contentWidth *4.3 / 5
     platform4.y = display.contentHeight * 2.5/ 5
         
@@ -499,7 +499,7 @@ function scene:create( event )
         
     sceneGroup:insert( zombie1)
 
-    zombie1platform = display.newImageRect("Images/Level1PlatformHunter.png", 200, 50)
+    zombie1platform = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
     zombie1platform.x = display.contentWidth * 3.5 / 8
     zombie1platform.y = display.contentHeight * 3 / 5
         
@@ -512,7 +512,7 @@ function scene:create( event )
         
     sceneGroup:insert( zombie2 )
 
-    zombie2platform = display.newImageRect("Images/Level1PlatformHunter.png", 200, 50)
+    zombie2platform = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
     zombie2platform.x = display.contentWidth * 2/ 8
     zombie2platform.y = display.contentHeight * 3.7/ 5
         
@@ -547,7 +547,7 @@ function scene:create( event )
     sceneGroup:insert( unmuteButton )
 
 
-    portalPlatform = display.newImageRect("Images/Level1PlatformHunter.png", 250, 50)
+    portalPlatform = display.newImageRect("Images/Level2PlatformHunter.png", 250, 50)
     portalPlatform.x = display.contentWidth * 1.8 / 2
     portalPlatform.y = display.contentHeight *0.5 / 2
 
