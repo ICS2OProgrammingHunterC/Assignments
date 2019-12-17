@@ -91,8 +91,10 @@ end
 local function TouchListenerAnswer(touch)
 
     if (touch.phase == "ended") then
+
         correctObject.isVisible = true
         
+
         -- play the correct sound 
         correctSoundChannel = audio.play(correctSound)
 
@@ -110,7 +112,9 @@ local function TouchListenerWrongAnswer(touch)
 
         incorrectSoundChannel = audio.play(incorrectSound)
 
+        --display the inocrrect object
         incorrectObject.isVisible = true
+
         timer.performWithDelay(1500, HideIncorrect)
     end 
 end

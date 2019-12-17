@@ -249,6 +249,7 @@ function scene:show( event )
         unmuteButton:addEventListener("touch", Unmute)
 
         Sound( )
+
     end
 
 end --function scene:show( event )
@@ -272,6 +273,7 @@ function scene:hide( event )
     elseif ( phase == "did" ) then
         muteButton:removeEventListener("touch", Mute)
         unmuteButton:removeEventListener("touch", Unmute)
+
         audio.stop(bkgMusicChannel)
     end
 
