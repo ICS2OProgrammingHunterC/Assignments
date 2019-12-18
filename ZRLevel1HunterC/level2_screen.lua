@@ -238,8 +238,8 @@ local function Mute(touch)
         
         --pause the sound
         bkgMusicChannel = audio.pause(bkgMusic)
-        audio.stop(painSoundChannel)
-        audio.stop(coinSoundChannel)
+        painSoundChannel = audio.stop(painSound)
+        coinSoundChannel = audio.stop(coinSound)
         soundOn = false
         --hide the mute button
         muteButton.isVisible = false

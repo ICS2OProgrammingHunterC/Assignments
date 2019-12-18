@@ -164,7 +164,7 @@ end
 
 local function DisplayQuestion()
     --creating random numbers
-    questionSelection = math.random (1,12)
+    questionSelection = math.random (1,16)
 
     if(questionSelection == 1) then
 
