@@ -86,7 +86,6 @@ local function HideIncorrect()
     BackToLevel2( )
 end
 
------------------------------------------------------------------------------------------
 --checking to see if the user pressed the right answer and bring them back to level 1
 local function TouchListenerAnswer(touch)
 
@@ -165,7 +164,7 @@ end
 
 local function DisplayQuestion()
     --creating random numbers
-    questionSelection = math.random (1,7)
+    questionSelection = math.random (1,12)
 
     if(questionSelection == 1) then
 
@@ -248,6 +247,85 @@ local function DisplayQuestion()
         wrongText1.text = "Venus"
         wrongText2.text = "Mars"
         wrongText3.text = "Jupiter"
+    elseif(questionSelection == 8)then
+
+        --create the question
+        questionText.text = "What Planet is known as the \nred planet?"
+
+        answerText.text = "Mars"
+
+        wrongText1.text = "Venus"
+        wrongText2.text = "Uranus"
+        wrongText3.text = "Saturn"
+    elseif(questionSelection == 9)then
+        --create the question
+        questionText.text = "What Planet has a ring around it?"
+
+        answerText.text = "Saturn"
+
+        wrongText1.text = "Mercury"
+        wrongText2.text = "Uranus"
+        wrongText3.text = "Earth"
+    elseif(questionSelection == 10)then
+        --create the question
+        questionText.text = "What is the Hottest planet?"
+
+        answerText.text = "Venus"
+
+        wrongText1.text = "Jupiter"
+        wrongText2.text = "Mars"
+        wrongText3.text = "Saturn"
+    elseif(questionSelection == 11)then
+        --create the question
+        questionText.text = "What Planet has the \nmost Moons?"
+
+        answerText.text = "Jupiter"
+
+        wrongText1.text = "Neptune"
+        wrongText2.text = "Uranus"
+        wrongText3.text = "Earth"
+    elseif(questionSelection == 12)then
+        --create the question
+        questionText.text = "What is the coldest Planet?"
+
+        answerText.text = "Neptune"
+
+        wrongText1.text = "Mars"
+        wrongText2.text = "Earth"
+        wrongText3.text = "Uranus"
+    elseif(questionSelection == 13)then
+        --create the question
+        questionText.text = "What do we use to see Planets\nfrom the ground?"
+
+        answerText.text = "a Telescope"
+
+        wrongText1.text = "a Microscope"
+        wrongText2.text = "a Horoscope"
+        wrongText3.text = "a Skyoscope"
+    elseif(questionSelection == 14)then
+        questionText.text = "What Planet has no Moons?"
+
+        answerText.text = "Venus"
+
+        wrongText1.text = "Mars"
+        wrongText2.text = "Saturn"
+        wrongText3.text = "Jupiter"
+    elseif(questionSelection == 15)then
+        questionText.text = "What is the Oldest Planet?"
+
+        answerText.text = "Jupiter"
+
+        wrongText1.text = "Venus"
+        wrongText2.text = "Neptune"
+        wrongText3.text = "Uranus"
+    elseif(questionSelection == 16)then
+        questionText.text = "What is the second smallest\n planet in the solar system?"
+
+        answerText.text = "Mars"
+
+        wrongText1.text = "Pluto"
+        wrongText2.text = "Mercury"
+        wrongText3.text = "Uranus"
     end
 end
 

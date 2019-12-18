@@ -67,8 +67,8 @@ local lArrow
 local motionx = 0
 local RSPEED = 7
 local LSPEED = -7
-local LINEAR_VELOCITY = -375
-local GRAVITY = 20
+local LINEAR_VELOCITY = -530
+local GRAVITY = 30
 
 local leftW 
 local topW
@@ -194,6 +194,7 @@ end
 local function MakeKeysVisible()
     key1.isVisible = true
     key2.isVisible = true
+    key3.isVisible = true
 end
 
 local function MakeHeartsVisible()
@@ -237,8 +238,8 @@ local function Mute(touch)
         
         --pause the sound
         bkgMusicChannel = audio.pause(bkgMusic)
-        painSoundChannel = audio.pause(painSound)
-        coinSoundChannel = audio.pause(coinSound)
+        audio.stop(painSoundChannel)
+        audio.stop(coinSoundChannel)
         soundOn = false
         --hide the mute button
         muteButton.isVisible = false
@@ -253,6 +254,8 @@ local function Unmute(touch)
         
         --pause the sound
         bkgMusicChannel = audio.resume(bkgMusic)
+        painSoundChannel = audio.resume(painSound)
+        coinSoundChannel = audio.resume(coinSound)
         soundOn = true
         --hide the mute button
         muteButton.isVisible = true
