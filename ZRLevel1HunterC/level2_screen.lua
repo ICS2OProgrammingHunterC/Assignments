@@ -47,6 +47,8 @@ local zombie2ScrollSpeed = 2
 local zombie1ScrollSpeed = 4
 local zombie3ScrollSpeed = 1
 
+local birdScrollSpeed = 5
+
 local portal
 local portalPlatform
 
@@ -83,6 +85,8 @@ local theBall
 local questionsAnswered = 0
 
 local pauseButton
+
+local bird
 
 -----------------------------------------------------------------------------------------
 -- SOOUNDS
@@ -233,6 +237,11 @@ local function MovePortal()
     portal:rotate(10)
 end
 
+local function MoveBird(event)
+    bird.x = bird.x - birdScrollSpeed
+    bird.y = bird.y + birdScrollSpeed
+end
+
 local function Mute(touch)
     if(touch.phase == "ended") then
         
@@ -378,6 +387,7 @@ local function RemoveCollisionListeners()
 
 
 end
+Runtime:addEventListener("enterFrame", MoveBird)
 
 local function AddPhysicsBodies()
     --add to the physics engine
@@ -662,6 +672,13 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( key3 )
 
+    bird = display.newImage("Images/bird@2x.png", 25, 25)
+    bird.x = 500
+    bird.y = 300
+    bird.height = 100
+    bird.width = 100
+    bird.myName = "bird"
+
     -----------------------------------------------------------------------------------------
     -- WIDGETS
     -----------------------------------------------------------------------------------------
@@ -739,6 +756,7 @@ function scene:show( event )
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
 
+        MoveBird()
 
 
     end

@@ -114,6 +114,8 @@ local function TouchListenerWrongAnswer(touch)
         --display the inocrrect object
         incorrectObject.isVisible = true
 
+        incorrectObject.text = "Incorrect! The correct answer\nis " .. answerText.text .. "."
+
         timer.performWithDelay(1500, HideIncorrect)
     end 
 end
@@ -124,6 +126,9 @@ local function TouchListenerWrongAnswer2(touch)
     if (touch.phase == "ended") then
 
         incorrectSoundChannel = audio.play(incorrectSound)
+
+        incorrectObject.text = "Incorrect! The correct answer\nis " .. answerText.text 
+
 
         incorrectObject.isVisible = true
         timer.performWithDelay(1500, HideIncorrect)
@@ -138,6 +143,9 @@ local function TouchListenerWrongAnswer3(touch)
     if (touch.phase == "ended") then
 
         incorrectSoundChannel = audio.play(incorrectSound)
+
+        incorrectObject.text = "Incorrect! The correct answer\nis " .. answerText.text 
+
 
         incorrectObject.isVisible = true
         timer.performWithDelay(1500, HideIncorrect)
@@ -259,7 +267,7 @@ local function DisplayQuestion()
         wrongText3.text = "Saturn"
     elseif(questionSelection == 9)then
         --create the question
-        questionText.text = "What Planet has a ring around it?"
+        questionText.text = "What Planet has a ring\naround it?"
 
         answerText.text = "Saturn"
 
@@ -417,7 +425,7 @@ function scene:create( event )
     --making a cover rectangle to have the background fully bolcked where the question is
     cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50 )
     --setting its colour
-    cover:setFillColor(153/255, 0/255, 0/255)
+    cover:setFillColor(0/255, 0/255, 153/255)
 
     -- create the question text object
     questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
