@@ -240,6 +240,7 @@ end
 local function MoveBird(event)
     bird.x = bird.x - birdScrollSpeed
     bird.y = bird.y + birdScrollSpeed
+
 end
 
 local function Mute(touch)
@@ -247,8 +248,8 @@ local function Mute(touch)
         
         --pause the sound
         bkgMusicChannel = audio.pause(bkgMusic)
-        painSoundChannel = audio.stop(painSound)
-        coinSoundChannel = audio.stop(coinSound)
+        painSoundChannel = audio.pause(painSound)
+        coinSoundChannel = audio.pause(coinSound)
         soundOn = false
         --hide the mute button
         muteButton.isVisible = false
@@ -288,7 +289,8 @@ local function onCollision( self, event )
 
         if  (event.target.myName == "zombie1") or 
             (event.target.myName == "zombie2") or
-            (event.target.myName == "zombie3")then
+            (event.target.myName == "zombie3") or
+            (event.target.myName == "bird") then
 
 
             --pain sound
@@ -371,6 +373,9 @@ local function AddCollisionListeners()
 
     portal.collision = onCollision
     portal:addEventListener( "collision" )
+
+    bird.collision = onCollision
+    bird:addEventListener( "collision" )
 end
 
 local function RemoveCollisionListeners()
@@ -383,9 +388,9 @@ local function RemoveCollisionListeners()
     zombie2:removeEventListener( "collision" )
     zombie3:removeEventListener( "collision" )
 
-    portal:addEventListener( "collision" )
+    portal:removeEventListener( "collision" )
 
-
+    bird:removeEventListener( "collision" )
 end
 Runtime:addEventListener("enterFrame", MoveBird)
 
@@ -417,6 +422,9 @@ local function AddPhysicsBodies()
     physics.addBody(portal, "static", {density=1, friction=0.3, bounce=0.2})
     physics.addBody(portalPlatform, "static", {density=1, friction=0.3, bounce=0.2})
 
+    physics.addBody(bird, "static", {density=1, friction=0.3, bounce=0.2})
+
+
 
 end
 
@@ -441,7 +449,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(portal)
     physics.removeBody(portalPlatform)
 
- 
+    physics.removeBody(bird)
 end
 
 -----------------------------------------------------------------------------------------
@@ -672,12 +680,14 @@ function scene:create( event )
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( key3 )
 
-    bird = display.newImage("Images/bird@2x.png", 25, 25)
-    bird.x = 500
-    bird.y = 300
+    bird = display.newImage("Images/Bird@2x.png", 25, 25)
+    bird.x = 700
+    bird.y = 0
     bird.height = 100
     bird.width = 100
     bird.myName = "bird"
+
+    sceneGroup:insert( bird )
 
     -----------------------------------------------------------------------------------------
     -- WIDGETS
@@ -756,7 +766,8 @@ function scene:show( event )
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
 
-        MoveBird()
+
+
 
 
     end
@@ -795,6 +806,9 @@ function scene:hide( event )
         unmuteButton:removeEventListener("touch", Unmute)
         Runtime:removeEventListener("enterFrame", MovePortal)
         Runtime:removeEventListener("enterFrame", MoveZombies)
+
+        Runtime:removeEventListener("enterFrame", MoveBird)
+
 
         audio.stop(bkgMusicChannel)
     end
