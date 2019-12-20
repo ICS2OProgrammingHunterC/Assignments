@@ -17,6 +17,7 @@ sceneName = "main_menu"
 -- Create Scene Object
 local scene = composer.newScene( sceneName )
 
+
 -----------------------------------------------------------------------------------------
 --LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -27,6 +28,7 @@ local instructionsButton
 
 local muteButton
 local unmuteButton
+
 
 -----------------------------------------------------------------------------------------
 --LOCAL SOUNDS

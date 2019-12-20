@@ -28,6 +28,10 @@ sceneName = "level2_screen"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+--GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+currentLevel = 2
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
@@ -744,6 +748,7 @@ function scene:show( event )
 
         numLives = 2
         questionsAnswered = 0
+        currentLevel = 2
         bkgMusicChannel = audio.play( bkgMusic, {channel = 1, loops = -1} )
 
 

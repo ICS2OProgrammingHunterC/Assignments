@@ -26,7 +26,10 @@ sceneName = "level4_screen"
 
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
-
+-----------------------------------------------------------------------------------------
+--GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+currentLevel = 4
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -48,7 +51,8 @@ local zombie2ScrollSpeed = 2
 local zombie1ScrollSpeed = 4
 local zombie3ScrollSpeed = 1
 
-local birdScrollSpeed = 5
+local birdScrollSpeedX = 5
+local birdScrollSpeedY = 5
 
 local portal
 local portalPlatform
@@ -239,11 +243,26 @@ local function MovePortal()
 end
 
 local function MoveBird(event)
-    timer.performWithDelay(7500, MoveBird)
-    bird.x = bird.x - birdScrollSpeed
-    bird.y = bird.y + birdScrollSpeed
-
+    if (bird.x > 0) then
+        bird.x = bird.x - birdScrollSpeedX
+        bird.y = bird.y + birdScrollSpeedY
+    else
+        Runtime:removeEventListener("event", MoveBird)
+    end
 end
+
+local function MoveBirdDelay()
+    bird.isVisible = true
+    if (bird.x < display.contentWidth/2) then
+        birdScrollSpeedX = -birdScrollSpeedX        
+    end
+    print ("***birdScrollSpeedX= " .. birdScrollSpeedX)
+    print ("***birdScrollSpeedY= " .. birdScrollSpeedY)
+    print ("***bird.x = " .. bird.x)
+    Runtime:addEventListener("enterFrame", MoveBird)
+end
+
+
 
 local function Mute(touch)
     if(touch.phase == "ended") then
@@ -394,7 +413,7 @@ local function RemoveCollisionListeners()
 
     bird:removeEventListener( "collision" )
 end
-Runtime:addEventListener("enterFrame", MoveBird)
+
 
 local function AddPhysicsBodies()
     --add to the physics engine
@@ -485,7 +504,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/forest.jpeg", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level4ScreenHunter@2x.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -493,37 +512,37 @@ function scene:create( event )
     sceneGroup:insert( bkg_image )    
     
     -- Insert the platforms
-    platform1 = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
+    platform1 = display.newImageRect("Images/Level4PlatformHunter.png", 200, 50)
     platform1.x = display.contentWidth * 1.8 / 2
     platform1.y = display.contentHeight * 0.5 / 2
         
     sceneGroup:insert( platform1 )
 
-    platform2 = display.newImageRect("Images/Level2PlatformHunter.png", 175, 50)
+    platform2 = display.newImageRect("Images/Level4PlatformHunter.png", 175, 50)
     platform2.x = display.contentWidth* 0.5 / 2
     platform2.y = display.contentHeight * 2.3 / 4
         
     sceneGroup:insert( platform2 )
 
-    platform3 = display.newImageRect("Images/Level2PlatformHunter.png", 180, 50)
+    platform3 = display.newImageRect("Images/Level4PlatformHunter.png", 180, 50)
     platform3.x = display.contentWidth *3.8 / 5
     platform3.y = display.contentHeight * 3.8 / 5
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
+    platform4 = display.newImageRect("Images/Level4PlatformHunter.png", 200, 50)
     platform4.x = 0
     platform4.y = display.contentHeight * 4 / 5
         
     sceneGroup:insert(platform4)
 
-    platform5 = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
+    platform5 = display.newImageRect("Images/Level4PlatformHunter.png", 200, 50)
     platform5.x = display.contentWidth * 1.2 /2
     platform5.y = display.contentHeight * 1.7/ 4
         
     sceneGroup:insert(platform5)
 
-    zombie1platform = display.newImageRect("Images/Level2PlatformHunter.png", 180, 50)
+    zombie1platform = display.newImageRect("Images/Level4PlatformHunter.png", 180, 50)
     zombie1platform.x = display.contentWidth *4.3 / 5
     zombie1platform.y = display.contentHeight * 2.5/ 5
         
@@ -543,7 +562,7 @@ function scene:create( event )
         
     sceneGroup:insert( zombie2 )
 
-    zombie2platform = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
+    zombie2platform = display.newImageRect("Images/Level4PlatformHunter.png", 200, 50)
     zombie2platform.x = display.contentWidth * 3.5 / 8
     zombie2platform.y = display.contentHeight * 3.7/ 5
         
@@ -577,7 +596,7 @@ function scene:create( event )
     sceneGroup:insert( unmuteButton )
 
 
-    portalPlatform = display.newImageRect("Images/Level2PlatformHunter.png", 250, 50)
+    portalPlatform = display.newImageRect("Images/Level4PlatformHunter.png", 250, 50)
     portalPlatform.x = display.contentWidth * 0.7 / 8
     portalPlatform.y = display.contentHeight * 0.5 / 2
 
@@ -690,7 +709,7 @@ function scene:create( event )
     sceneGroup:insert( key3 )
 
     bird = display.newImage("Images/Bird@2x.png", 25, 25)
-    bird.x = 700
+    bird.x = math.random(700, display.contentWidth)
     bird.y = 0
     bird.height = 100
     bird.width = 100
@@ -749,9 +768,14 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
+        -- reset the bird position
+        bird.x = math.random(0, display.contentWidth)
+        bird.y = 0
+        bird.isVisible = false
 
         numLives = 2
         questionsAnswered = 0
+        currentLevel = 4
         bkgMusicChannel = audio.play( bkgMusic, {channel = 1, loops = -1} )
 
 
@@ -774,11 +798,8 @@ function scene:show( event )
         Runtime:addEventListener("enterFrame", MoveZombies)
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
-
-
-
-
-
+        timer.performWithDelay(1500, MoveBirdDelay, 1)
+        
     end
 
 end --function scene:show( event )

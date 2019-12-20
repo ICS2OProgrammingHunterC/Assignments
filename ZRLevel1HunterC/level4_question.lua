@@ -25,6 +25,7 @@ sceneName = "level2_question"
 -- Creating Scene Object
 local scene = composer.newScene( sceneName )
 
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -172,25 +173,25 @@ end
 
 local function DisplayQuestion()
     --creating random numbers
-    questionSelection = math.random (1,16)
+    questionSelection = math.random (1,1)
 
     if(questionSelection == 1) then
 
         --Make the question
-        questionText.text = "What is the Smallest Planet\nin our solar System?"
+        questionText.text = "Plants use energy from the\n________ to make food"
 
         --creating answer text
-        answerText.text = "Mercury"
+        answerText.text = "Sun"
         
         --creating wrong answers
-        wrongText1.text = "Pluto"
-        wrongText2.text = "Mars"
-        wrongText3.text = "Earth"
+        wrongText1.text = "Oxygen"
+        wrongText2.text = "Soil"
+        wrongText3.text = "Water"
 
     elseif(questionSelection == 2)then
 
         --Making the question
-        questionText.text = "What is the Biggest Planet\nin our solar System?"
+        questionText.text = "What is the part of the plant\nthat uses light to make food?"
 
         answerText.text = "Jupiter"
 

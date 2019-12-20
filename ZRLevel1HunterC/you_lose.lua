@@ -28,7 +28,11 @@ local function MainMenuTransition ()
 end
 
 local function RestartTransition ()
-    composer.gotoScene("level2_screen", {effect = "fade", time = 500 })
+    if(currentLevel == 2)then
+        composer.gotoScene("level2_screen", {effect = "fade", time = 500 })
+    elseif(currentLevel == 4)then
+        composer.gotoScene("level4_screen", {effect = "fade", time = 500 })
+    end
 end
 -----------------------------------------------------------------------------------------
 -- SOUNDS
