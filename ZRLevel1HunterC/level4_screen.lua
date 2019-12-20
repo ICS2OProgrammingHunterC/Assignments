@@ -1,9 +1,9 @@
 -----------------------------------------------------------------------------------------
 --
--- level2_screen.lua
+-- level4_screen.lua
 -- Created by: Hunter Connolly
 -- Date: Nov. 12, 2019
--- Description: This is the level 2 screen of the game.
+-- Description: This is the level 4 screen of the game.
 -----------------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ local physics = require("physics")
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
-sceneName = "level2_screen"
+sceneName = "level4_screen"
 
 -----------------------------------------------------------------------------------------
 
@@ -38,6 +38,7 @@ local platform1
 local platform2
 local platform3
 local platform4
+local platform5
 
 local zombie1
 local zombie2
@@ -211,9 +212,9 @@ end
 local function MoveZombies()
     -- move zombie2 back and forth on the platform
     zombie2.x = zombie2.x + zombie2ScrollSpeed
-    if( zombie2.x > 320)then
+    if( zombie2.x > 515)then
         zombie2ScrollSpeed = -zombie2ScrollSpeed
-    elseif( zombie2.x < 190) then
+    elseif( zombie2.x < 375) then
         zombie2ScrollSpeed = -zombie2ScrollSpeed
     end
 
@@ -227,7 +228,7 @@ local function MoveZombies()
     zombie3.x = zombie3.x + zombie3ScrollSpeed
     if( zombie3.x > 1024)then
         zombie3ScrollSpeed = -zombie3ScrollSpeed
-    elseif(zombie3.x < 567)then
+    elseif(zombie3.x < 50)then
         zombie3ScrollSpeed = -zombie3ScrollSpeed
     end
 
@@ -338,7 +339,7 @@ local function onCollision( self, event )
             character.isVisible = false
 
             -- show overlay with math question
-            composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
+            composer.showOverlay( "level4_question", { isModal = true, effect = "fade", time = 100})
 
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
@@ -401,6 +402,7 @@ local function AddPhysicsBodies()
     physics.addBody( platform2, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform3, "static", { density=1.0, friction=0.3, bounce=0.2 } )
     physics.addBody( platform4, "static", { density=1.0, friction=0.3, bounce=0.2 } )
+    physics.addBody( platform5, "static", { density=1.0, friction=0.3, bounce=0.2 } )
 
 
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
@@ -434,6 +436,7 @@ local function RemovePhysicsBodies()
     physics.removeBody(platform2)
     physics.removeBody(platform3)
     physics.removeBody(platform4)
+    physics.removeBody(platform5)
 
     physics.removeBody(leftW)
     physics.removeBody(topW)
@@ -482,7 +485,7 @@ function scene:create( event )
     local sceneGroup = self.view
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/Level2ScreenHunter@2x.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/forest.jpeg", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentWidth / 2 
     bkg_image.y = display.contentHeight / 2
 
@@ -491,14 +494,14 @@ function scene:create( event )
     
     -- Insert the platforms
     platform1 = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
-    platform1.x = display.contentWidth * 0.7 / 8
-    platform1.y = display.contentHeight * 1.6 / 4
+    platform1.x = display.contentWidth * 1.8 / 2
+    platform1.y = display.contentHeight * 0.5 / 2
         
     sceneGroup:insert( platform1 )
 
     platform2 = display.newImageRect("Images/Level2PlatformHunter.png", 175, 50)
-    platform2.x = display.contentWidth* 1.2 /2
-    platform2.y = display.contentHeight * 1.4/ 4
+    platform2.x = display.contentWidth* 0.5 / 2
+    platform2.y = display.contentHeight * 2.3 / 4
         
     sceneGroup:insert( platform2 )
 
@@ -508,11 +511,23 @@ function scene:create( event )
         
     sceneGroup:insert( platform3 )
 
-    platform4 = display.newImageRect("Images/Level2PlatformHunter.png", 180, 50)
-    platform4.x = display.contentWidth *4.3 / 5
-    platform4.y = display.contentHeight * 2.5/ 5
+    platform4 = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
+    platform4.x = 0
+    platform4.y = display.contentHeight * 4 / 5
         
-    sceneGroup:insert( platform4 )
+    sceneGroup:insert(platform4)
+
+    platform5 = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
+    platform5.x = display.contentWidth * 1.2 /2
+    platform5.y = display.contentHeight * 1.7/ 4
+        
+    sceneGroup:insert(platform5)
+
+    zombie1platform = display.newImageRect("Images/Level2PlatformHunter.png", 180, 50)
+    zombie1platform.x = display.contentWidth *4.3 / 5
+    zombie1platform.y = display.contentHeight * 2.5/ 5
+        
+    sceneGroup:insert( zombie1platform )
     
     zombie1 = display.newImageRect("Images/Zombie@2x.png", 75, 125)
     zombie1.x = display.contentWidth * 4.3 / 5
@@ -521,21 +536,15 @@ function scene:create( event )
         
     sceneGroup:insert( zombie1)
 
-    zombie1platform = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
-    zombie1platform.x = display.contentWidth * 3.5 / 8
-    zombie1platform.y = display.contentHeight * 3 / 5
-        
-    sceneGroup:insert(zombie1platform)
-
     zombie2 = display.newImageRect("Images/Zombie@2x.png", 75, 125)
-    zombie2.x = display.contentWidth * 2 / 8   
+    zombie2.x = display.contentWidth * 3.5/ 8   
     zombie2.y = display.contentHeight * 3.15 / 5
     zombie2.myName = "zombie2"
         
     sceneGroup:insert( zombie2 )
 
     zombie2platform = display.newImageRect("Images/Level2PlatformHunter.png", 200, 50)
-    zombie2platform.x = display.contentWidth * 2/ 8
+    zombie2platform.x = display.contentWidth * 3.5 / 8
     zombie2platform.y = display.contentHeight * 3.7/ 5
         
     sceneGroup:insert( zombie2platform)
@@ -557,7 +566,6 @@ function scene:create( event )
 
     sceneGroup:insert( muteButton )
 
-    --------------------------------------------------------------------------------------------
     --Creating the unmute button
     unmuteButton = display.newImageRect("Images/MuteButtonPressedHunterC.png", 200, 200)
     unmuteButton.x = 740
@@ -570,15 +578,15 @@ function scene:create( event )
 
 
     portalPlatform = display.newImageRect("Images/Level2PlatformHunter.png", 250, 50)
-    portalPlatform.x = display.contentWidth * 1.8 / 2
-    portalPlatform.y = display.contentHeight *0.5 / 2
+    portalPlatform.x = display.contentWidth * 0.7 / 8
+    portalPlatform.y = display.contentHeight * 0.5 / 2
 
     sceneGroup:insert( portalPlatform )
 
     --insert the portal
     portal = display.newImage("Images/PortalNate@2x.png", 50, 50)
-    portal.x = display.contentWidth* 4.5 / 5
-    portal.y = display.contentHeight * 0.6/ 5
+    portal.x = display.contentWidth* 0.7 / 8
+    portal.y = display.contentHeight * 0.25/ 2
     portal.width = 125
     portal.height = 125
     portal.myName = "portal"
@@ -666,16 +674,16 @@ function scene:create( event )
 
     --key2
     key2 = display.newImageRect ("Images/KeyObjectNate@2x.png", 100, 70)
-    key2.x = 100
-    key2.y = 250
+    key2.x = display.contentWidth * 1.8 / 2
+    key2.y = display.contentHeight * 0.35 / 2
     key2.myName = "key2"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( key2 )
 
     key3 = display.newImageRect ("Images/KeyObjectNate@2x.png", 100, 70)
-    key3.x = display.contentWidth * 3 / 5
-    key3.y = display.contentHeight * 1.35 / 5
+    key3.x = display.contentWidth * 0.5 / 2
+    key3.y = display.contentHeight * 2 / 4
     key3.myName = "key3"
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
@@ -767,7 +775,7 @@ function scene:show( event )
         muteButton:addEventListener("touch", Mute)
         unmuteButton:addEventListener("touch", Unmute)
 
-        timer.performWithDelay(7500, MoveBird)
+
 
 
 

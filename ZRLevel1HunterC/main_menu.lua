@@ -274,7 +274,7 @@ function scene:hide( event )
         muteButton:removeEventListener("touch", Mute)
         unmuteButton:removeEventListener("touch", Unmute)
 
-        audio.stop(bkgMusicChannel)
+        
     end
 
 end --function scene:hide( event )
