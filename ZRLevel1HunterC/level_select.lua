@@ -31,14 +31,19 @@ local backButton
 local function MainMenuTransition( )
     composer.gotoScene( "main_menu", {effect = "slideLeft", time = 500 })
 end
+local function Level1Transition( )
+    composer.gotoScene( "level1_screen", {effect = "fade", time = 500})
+end
 
 local function Level2Transition( )
     composer.gotoScene( "level2_screen", {effect = "flipFadeOutIn", time = 500})
 end
 
-local function Level1Transition( )
-    composer.gotoScene( "level1_screen", {effect = "fade", time = 500})
+local function Level4Transition( )
+    composer.gotoScene( "level4_screen", {effect = "flipFadeOutIn", time = 500})
 end
+
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -71,7 +76,7 @@ function scene:create( event )
             overFile = "Images/Level1ButtonPressedHunter@2x.png",
 
             -- when the button is released it will go to the level 1 screen
-            onRelease = Level2Transition
+            onRelease = Level1Transition
 
         })
 
@@ -95,7 +100,26 @@ function scene:create( event )
         })
    
    level2Button.width = 250
-   level2Button.height =250
+   level2Button.height = 250
+
+      -- Creating the level 2 button
+   level4Button = widget.newButton(
+        {
+            -- set the x and y position
+            x = display.contentWidth*3/4,
+            y = display.contentHeight/2,
+
+            -- insert the image
+            defaultFile = "Images/Level3ButtonUnpressedHunter@2x.png",
+            overFile = "Images/Level3ButtonPressedHunter@2x.png",
+
+            -- when the button is released it will go to the level 1 screen
+            onRelease = Level4Transition
+
+        })
+   
+   level4Button.width = 250
+   level4Button.height = 250
 
     --Creating the back BUTTON
     backButton = widget.newButton(
@@ -120,6 +144,7 @@ function scene:create( event )
     sceneGroup:insert( backButton )
     sceneGroup:insert( level2Button )
     sceneGroup:insert( level1Button )
+    sceneGroup:insert( level4Button )
 
 end -- function scene:create( event )
 
