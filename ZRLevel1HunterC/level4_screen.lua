@@ -254,7 +254,8 @@ end
 local function MoveBirdDelay()
     bird.isVisible = true
     if (bird.x < display.contentWidth/2) then
-        birdScrollSpeedX = -birdScrollSpeedX        
+        birdScrollSpeedX = -birdScrollSpeedX   
+        bird.xScale = -1     
     end
     print ("***birdScrollSpeedX= " .. birdScrollSpeedX)
     print ("***birdScrollSpeedY= " .. birdScrollSpeedY)
@@ -295,6 +296,9 @@ local function Unmute(touch)
     end
 end
 
+local function RandomTimer( )
+    timer.random(0,10000)
+end
 
 local function onCollision( self, event )
     -- for testing purposes
