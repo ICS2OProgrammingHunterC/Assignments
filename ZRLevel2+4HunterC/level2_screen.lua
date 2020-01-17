@@ -51,7 +51,8 @@ local zombie2ScrollSpeed = 2
 local zombie1ScrollSpeed = 4
 local zombie3ScrollSpeed = 1
 
-local birdScrollSpeed = 5
+local birdScrollSpeedX = 3
+local birdScrollSpeedY = 3
 
 local portal
 local portalPlatform
@@ -64,7 +65,7 @@ local character
 
 local heart1
 local heart2
-local numLives = 2
+local numLives = 3
 
 local rArrow 
 local uArrow
@@ -101,8 +102,8 @@ local painSoundChannel
 local coinSound = audio.loadSound("Sounds/coin.wav")
 local coinSoundChannel
 
-local bkgMusic = audio.loadStream("Sounds/action.mp3")
-local bkgMusicChannel
+
+
 
 -----------------------------------------------------------------------------------------
 -- LOCAL SCENE FUNCTIONS
@@ -140,10 +141,11 @@ local function stop (event)
 end
 
 local function WinScreenTransition( )
-    composer.gotoScene("you_win")
+    composer.gotoScene("you_win2")
 end
 
 local function PauseTransition( )
+    bird:removeEventListener( "collision" )
     composer.showOverlay("pause")
     character.isVisible = false
 end
@@ -208,6 +210,7 @@ end
 local function MakeHeartsVisible()
     heart1.isVisible = true
     heart2.isVisible = true
+    heart3.isVisible = true
 end
 
 
@@ -215,7 +218,7 @@ end
 local function MoveZombies()
     -- move zombie2 back and forth on the platform
     zombie2.x = zombie2.x + zombie2ScrollSpeed
-    if( zombie2.x > 320)then
+    if( zombie2.x > 300)then
         zombie2ScrollSpeed = -zombie2ScrollSpeed
     elseif( zombie2.x < 190) then
         zombie2ScrollSpeed = -zombie2ScrollSpeed
@@ -242,42 +245,36 @@ local function MovePortal()
 end
 
 local function MoveBird(event)
-    timer.performWithDelay(7500, MoveBird)
-    bird.x = bird.x - birdScrollSpeed
-    bird.y = bird.y + birdScrollSpeed
 
-end
-
-local function Mute(touch)
-    if(touch.phase == "ended") then
-        
-        --pause the sound
-        bkgMusicChannel = audio.pause(bkgMusic)
-        painSoundChannel = audio.pause(painSound)
-        coinSoundChannel = audio.pause(coinSound)
-        soundOn = false
-        --hide the mute button
-        muteButton.isVisible = false
-        --make the unmute button isVisible
-        unmuteButton.isVisible = true
+    if (bird.x > -100) and (bird.y < 1200) then
+        bird.x = bird.x - birdScrollSpeedX
+        bird.y = bird.y + birdScrollSpeedY
+    else
+        bird.isVisible = false
+        Runtime:removeEventListener("enterFrame", MoveBird)
+        timer.performWithDelay(math.random(7500,15000), MoveBirdDelay)
     end
 end
 
---function for when the user wants to unmute sound
-local function Unmute(touch)
-    if(touch.phase == "ended") then
-        
-        --pause the sound
-        bkgMusicChannel = audio.resume(bkgMusic)
-        painSoundChannel = audio.resume(painSound)
-        coinSoundChannel = audio.resume(coinSound)
-        soundOn = true
-        --hide the mute button
-        muteButton.isVisible = true
-        --make the unmute button isVisible
-        unmuteButton.isVisible = false
+function MoveBirdDelay()
+    bird.x = math.random(0, display.contentWidth)
+
+    bird.y = 0
+    bird.isVisible = true
+    -- set the direction of the bird to face right
+    if (bird.x < display.contentWidth/2) then
+        birdScrollSpeedX = -birdScrollSpeedX
+        bird.xScale = -1
+    -- set the direction of the bird to face left (original)
+    elseif (bird.x > display.contentWidth/2)then
+        birdScrollSpeedX = 3
+        bird.xScale = 1
     end
+    Runtime:addEventListener("enterFrame", MoveBird)
 end
+
+
+
 
 
 local function onCollision( self, event )
@@ -310,17 +307,26 @@ local function onCollision( self, event )
 
             -- decrease number of lives
             numLives = numLives - 1
+            if(numLives == 2)then
+                -- update hearts
 
-            if (numLives == 1) then
+                heart1.isVisible = true
+                heart2.isVisible = true
+                heart3.isVisible = false
+                timer.performWithDelay(200, ReplaceCharacter) 
+
+            elseif (numLives == 1) then
                 -- update hearts
                 heart1.isVisible = true
                 heart2.isVisible = false
+                heart3.isVisible = false
                 timer.performWithDelay(200, ReplaceCharacter) 
 
             elseif (numLives == 0) then
                 -- update hearts
                 heart1.isVisible = false
                 heart2.isVisible = false
+                heart3.isVisible = false
                 timer.performWithDelay(200, YouLoseTransition)
             end
         end
@@ -343,7 +349,7 @@ local function onCollision( self, event )
 
             -- show overlay with math question
             composer.showOverlay( "level2_question", { isModal = true, effect = "fade", time = 100})
-
+            bird:removeEventListener( "collision" )
             -- Increment questions answered
             questionsAnswered = questionsAnswered + 1
         end
@@ -397,7 +403,6 @@ local function RemoveCollisionListeners()
 
     bird:removeEventListener( "collision" )
 end
-Runtime:addEventListener("enterFrame", MoveBird)
 
 local function AddPhysicsBodies()
     --add to the physics engine
@@ -465,7 +470,8 @@ function ResumeLevel2()
 
     -- make character visible again
     character.isVisible = true
-    
+    bird.collision = onCollision
+    bird:addEventListener( "collision" )
     if (questionsAnswered > 0) then
         if (theBall ~= nil) and (theBall.isBodyActive == true) then
             physics.removeBody(theBall)
@@ -551,26 +557,7 @@ function scene:create( event )
 
     sceneGroup:insert( zombie3 )
 
-    --Creating the mute button
-    muteButton = display.newImageRect("Images/MuteButtonUnpressedHunterC.png", 200, 200)
-    muteButton.x = 740
-    muteButton.y = 120
-    muteButton.isVisible = true
-    muteButton.width = 75
-    muteButton.height = 75
-
-    sceneGroup:insert( muteButton )
-
-    --------------------------------------------------------------------------------------------
-    --Creating the unmute button
-    unmuteButton = display.newImageRect("Images/MuteButtonPressedHunterC.png", 200, 200)
-    unmuteButton.x = 740
-    unmuteButton.y = 120
-    unmuteButton.isVisible = false
-    unmuteButton.width = 75
-    unmuteButton.height = 75
-
-    sceneGroup:insert( unmuteButton )
+    
 
 
     portalPlatform = display.newImageRect("Images/Level2PlatformHunter.png", 250, 50)
@@ -607,6 +594,14 @@ function scene:create( event )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( heart2 )
+
+    heart3 = display.newImageRect("Images/HeartHunter@2x.png", 80, 80)
+    heart3.x = 220
+    heart3.y = 50
+    heart3.isVisible = true
+
+    -- Insert objects into the scene group in order to ONLY be associated with this scene
+    sceneGroup:insert( heart3 )
 
     --Insert the right arrow
     rArrow = display.newImageRect("Images/RightArrowUnpressed@2x.png", 100, 50)
@@ -691,6 +686,8 @@ function scene:create( event )
     bird.height = 100
     bird.width = 100
     bird.myName = "bird"
+    bird.isVisible = false
+    bird.xScale = 1
 
     sceneGroup:insert( bird )
 
@@ -742,16 +739,14 @@ function scene:show( event )
 
     elseif ( phase == "did" ) then
 
-        -- Called when the scene is now on screen.
-        -- Insert code here to make the scene come alive.
-        -- Example: start timers, begin animation, play audio, etc.
-
-        numLives = 2
+        numLives = 3
         questionsAnswered = 0
         currentLevel = 2
-        bkgMusicChannel = audio.play( bkgMusic, {channel = 1, loops = -1} )
 
-
+        bird.x = math.random(0, display.contentWidth)
+        bird.y = 0
+        bird.isVisible = false
+        
         -- make all Keys visible
         MakeKeysVisible()
 
@@ -769,13 +764,7 @@ function scene:show( event )
 
         Runtime:addEventListener("enterFrame", MovePortal)
         Runtime:addEventListener("enterFrame", MoveZombies)
-        muteButton:addEventListener("touch", Mute)
-        unmuteButton:addEventListener("touch", Unmute)
-
-        timer.performWithDelay(7500, MoveBird)
-
-
-
+        timer.performWithDelay(math.random(5000,15000), MoveBirdDelay)
     end
 
 end --function scene:show( event )
@@ -795,28 +784,26 @@ function scene:hide( event )
         -- Called when the scene is on screen (but is about to go off screen).
         -- Insert code here to "pause" the scene.
         -- Example: stop timers, stop animation, stop audio, etc.
-
+        RemoveCollisionListeners()
+        
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
-        RemoveCollisionListeners()
-        RemovePhysicsBodies()
 
+        RemovePhysicsBodies()
         physics.stop()
         RemoveArrowEventListeners()
         RemoveRuntimeListeners()
         display.remove(character)
 
-        muteButton:removeEventListener("touch", Mute)
-        unmuteButton:removeEventListener("touch", Unmute)
+        
         Runtime:removeEventListener("enterFrame", MovePortal)
         Runtime:removeEventListener("enterFrame", MoveZombies)
 
         Runtime:removeEventListener("enterFrame", MoveBird)
+        Runtime:removeEventListener("enterFrame", MoveBirdDelay)
 
-
-        audio.stop(bkgMusicChannel)
     end
 
 end --function scene:hide( event )

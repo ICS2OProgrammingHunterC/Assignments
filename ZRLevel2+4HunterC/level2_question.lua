@@ -425,26 +425,26 @@ function scene:create( event )
     --making a cover rectangle to have the background fully bolcked where the question is
     cover = display.newRoundedRect(display.contentCenterX, display.contentCenterY, display.contentWidth*0.8, display.contentHeight*0.95, 50 )
     --setting its colour
-    cover:setFillColor(0/255, 0/255, 153/255)
+    cover:setFillColor(0/255, 0/255, 102/255)
 
     -- create the question text object
-    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 60)
+    questionText = display.newText("", display.contentCenterX, display.contentCenterY*3/8, Arial, 50)
 
     -- create the answer text object & wrong answer text objects
-    answerText = display.newText("", X1, Y2, Arial, 50)
+    answerText = display.newText("", X1, Y2, Arial, 40)
     answerText.anchorX = 0
-    wrongText1 = display.newText("", X2, Y2, Arial, 50)
+    wrongText1 = display.newText("", X2, Y2, Arial, 40)
     wrongText1.anchorX = 0
-    wrongText2 = display.newText("", X1, Y1, Arial, 50)
+    wrongText2 = display.newText("", X1, Y1, Arial, 40)
     wrongText2.anchorX = 0
-    wrongText3 = display.newText("", X2, Y1, Arial, 50)
+    wrongText3 = display.newText("", X2, Y1, Arial, 40)
     wrongText3.anchorX = 0
 
-    correctObject = display.newText("Correct!", display.contentWidth/2, display.contentHeight*1/3, Arial, 50)
+    correctObject = display.newText("Correct!", display.contentWidth/2, display.contentHeight*1/3, Arial, 40)
     correctObject.isVisible = false
     correctObject:setFillColor(0,1,0)
 
-    incorrectObject = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/3, Arial, 50)
+    incorrectObject = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/3, Arial, 40)
     incorrectObject.isVisible = false
     incorrectObject:setFillColor(1,0,0)
     -----------------------------------------------------------------------------------------
